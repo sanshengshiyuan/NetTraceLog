@@ -34,10 +34,16 @@ public:
         return *this;
     }
     space& operator=(const space& other) {
+        if (&other == this) {
+            return *this;
+        }
         rep_ = other.rep;
         return *this;
     }
     space& operator=(space&& other) {
+        if (&other == this) {
+            return *this;
+        }
         rep_ = std::move(other.rep_);
         return *this;
     }
@@ -84,6 +90,7 @@ public:
         rep_ %= s;
         return *this;
     }
+
 private:
     _Rep rep_;
 };
