@@ -1,0 +1,49 @@
+Package: vcpkg-cmake
+Version: 2024-04-23
+Architecture: x64-linux
+Multi-Arch: same
+Abi: a9825654d1fa699e4610cb9b98b8e4e6e42478dee992349bebfd859befe0814e
+Status: install ok installed
+
+Package: vcpkg-cmake-get-vars
+Version: 2025-05-29
+Depends: vcpkg-cmake
+Architecture: x64-linux
+Multi-Arch: same
+Abi: abddffef72b0749562eef4fe77d4a89d1548ab4619abd7ef8a1cbb31532c77f5
+Status: install ok installed
+
+Package: vcpkg-cmake-config
+Version: 2024-05-23
+Architecture: x64-linux
+Multi-Arch: same
+Abi: 0d5f57471972e262e17834f5f0a7db510153f06fd17b8250e1fa25d2d610c11e
+Status: install ok installed
+
+Package: openssl
+Version: 3.5.1
+Depends: vcpkg-cmake, vcpkg-cmake-config, vcpkg-cmake-get-vars
+Architecture: x64-linux
+Multi-Arch: same
+Abi: 782083dca0ac1029d748e6af5dae63cd9ed6d5b1a1ea215812db0be07a1ae507
+Description: OpenSSL is an open source project that provides a robust, commercial-grade, and full-featured toolkit for the Transport Layer Security (TLS) and Secure Sockets Layer (SSL) protocols. It is also a general-purpose cryptography library.
+Status: install ok installed
+
+Package: zlib
+Version: 1.3.1
+Depends: vcpkg-cmake
+Architecture: x64-linux
+Multi-Arch: same
+Abi: fca1a416ee003d473cc7e7852766cf617be24fa26a26f3572842d4facca67d45
+Description: A compression library
+Status: install ok installed
+
+Package: zstd
+Version: 1.5.7
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-linux
+Multi-Arch: same
+Abi: 295a7493f73ae7f2b1496df031cc48ccbf659b2e2eeee981bdf1f5c82d642b46
+Description: Zstandard - Fast real-time compression algorithm
+Status: install ok installed
+
