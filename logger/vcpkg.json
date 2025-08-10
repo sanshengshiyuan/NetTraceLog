@@ -1,0 +1,8 @@
+{
+  "dependencies": [
+    "openssl",
+    "zlib",
+    "zstd",
+    "fmt"
+  ]
+}
