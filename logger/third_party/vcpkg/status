@@ -47,3 +47,13 @@ Abi: 295a7493f73ae7f2b1496df031cc48ccbf659b2e2eeee981bdf1f5c82d642b46
 Description: Zstandard - Fast real-time compression algorithm
 Status: install ok installed
 
+Package: fmt
+Version: 11.0.2
+Port-Version: 1
+Depends: vcpkg-cmake, vcpkg-cmake-config
+Architecture: x64-linux
+Multi-Arch: same
+Abi: edf90ab50b30a305ea87a5667120dd190bbb007824328d27318797cfa5979a50
+Description: {fmt} is an open-source formatting library providing a fast and safe alternative to C stdio and C++ iostreams.
+Status: install ok installed
+
