@@ -3,10 +3,19 @@
 #include <filesystem>
 #include <memory>
 
+#include "../utils/file_util.h"
+#include "../utils/sys_util.h"
+
 namespace logger {
 
 class MmapAux {
 public:
+    static constexpr size_t kDefaultCapacity = 512 * 1024;
+
+    static size_t GetValidCapacity(size_t size) {
+        size_t page_size = GetPageSize();
+        return (size + page_size - 1)/ page_size * page_size;
+    }
     using fpath = std::filesystem::path;//使用别名简化类型
 
     explicit MmapAux(fpath file_path);//单参数构造函数采用explicit避免隐式转换
@@ -19,7 +28,11 @@ public:
 
     void Resize(size_t new_size);//重新分配内存大小
 
+    void EnsureCapacity(size_t new_size);
+
     size_t Size() const;//返回内存大小
+
+    size_t Capacity() const;
 
     uint8_t* Data() const;//这里返回的是数据的指针，我这里是抄的源代码，暂时不知道为什么返回的是一个uint8_t*,待会在看一下
 
