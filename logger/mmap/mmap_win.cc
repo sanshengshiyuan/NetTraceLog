@@ -5,39 +5,39 @@
 namespace logger {
 
 class FileHandleDeleter {
- public:
+public:
   void operator()(HANDLE h) {
-    if (h != NULL)
+    if (h != nullptr) {
       CloseHandle(h);
+    }
   }
 };
-
 using FileHandlePtr = std::unique_ptr<std::remove_pointer_t<HANDLE>, FileHandleDeleter>;
 
-bool MMapAux::TryMap(size_t capacity) {
-  FileHandlePtr file_handle(CreateFileW(file_path_.wstring().c_str(), GENERIC_READ | GENERIC_WRITE, 0, NULL,
-                                        OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL));
+bool MmapAux::TryMap(size_t capacity) {
+  FileHandlePtr file_handle(CreateFileW(file_path_.wstring().c_str(), GENERIC_READ | GENERIC_WRITE, 0, nullptr,
+                                        OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr));
   if (file_handle.get() == INVALID_HANDLE_VALUE) {
     return false;
   }
   FileHandlePtr file_mapping_handle;
-  file_mapping_handle.reset(CreateFileMapping(file_handle.get(), NULL, PAGE_READWRITE, 0, capacity, NULL));
+  file_mapping_handle.reset(CreateFileMapping(file_handle.get(), nullptr, PAGE_READWRITE, 0, capacity, nullptr));
   if (!file_mapping_handle.get()) {
     return false;
   }
 
   handle_ = MapViewOfFile(file_mapping_handle.get(), FILE_MAP_ALL_ACCESS, 0, 0, capacity);
-  return handle_ != NULL;
+  return handle_ != nullptr;
 }
 
-void MMapAux::Unmap() {
+void MmapAux::Unmap() {
   if (handle_) {
     UnmapViewOfFile(handle_);
   }
-  handle_ = NULL;
+  handle_ = nullptr;
 }
 
-void MMapAux::Sync() {
+void MmapAux::Sync() {
   if (handle_) {
     FlushViewOfFile(handle_, capacity_);
   }

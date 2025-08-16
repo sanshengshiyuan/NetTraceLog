@@ -68,6 +68,8 @@ private:
 
     void Init(); //初始化这块mmap;
 
+    void Sync();
+
 private:
     fpath file_path_;//mmap映射的文件路径
     void* handle_;
