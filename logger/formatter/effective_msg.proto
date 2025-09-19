@@ -1,0 +1,13 @@
+syntax = "proto3";
+option optimize_for = LITE_RUNTIME;
+
+message EffectiveMsg {
+    int32 level = 1;
+    int64 timestamp = 2;
+    int32 pid = 3;
+    int32 tip = 4;
+    int32 line = 5;
+    string full_name = 6;
+    string func_name = 7;
+    string log_info = 8;
+}

@@ -1,0 +1,184 @@
+# 最低CMake版本要求
+cmake_minimum_required(VERSION 3.15)
+
+# 定义测试目标名称
+project(logger_demo)
+
+# 设置C++标准
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+#条件编译
+if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+    set(MMAP_SRCS ../mmap/mmap_aux.cc ../mmap/mmap_linux.cc)
+    set(UTIL_SRCS ../utils/sys_util_linux.cc ../utils/file_util.cc)
+elseif(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+    set(MMAP_SRCS ../mmap/mmap_aux.cc ../mmap/mmap_win.cc)
+    set(UTIL_SRCS ../utils/sys_util_win.cc ../utils/file_util.cc)
+else()
+    message(FATAL_ERROR "unsupported.")
+endif()
+
+set(FORMATTER_SRCS ../formatter/default_formatter.cc ../formatter/effective_formatter.cc ../formatter/effective_msg.pb.cc)
+set(SINK_SRCS ../sinks/console_sink.cc ../sinks/effective_sink.cc)
+set(COMPRESS_SRCS ../compress/zlib_compress.cc ../compress/zstd_compress.cc)
+set(CRYPT_SRCS ../encrypt/aes_encrypt.cc ../encrypt/encrypt.cc)
+set(CONTEXT_SRCS ../context/context.cc ../context/executor.cc ../context/thread_pool.cc)
+set(DECODER_SRCS ../decode/decoder.cc)
+
+set(SRCS
+    ../log_handle.cc
+    ${DECODER_SRCS}
+    ${MMAP_SRCS}
+    ${UTIL_SRCS}
+    ${FORMATTER_SRCS}
+    ${SINK_SRCS}
+    ${COMPRESS_SRCS}
+    ${CRYPT_SRCS}
+    ${CONTEXT_SRCS}
+)
+
+# 配置第三方库路径（关键步骤）
+get_filename_component(PROJECT_ROOT_DIR "${CMAKE_CURRENT_LIST_DIR}/.." ABSOLUTE)
+
+# 1. 设置第三方库的头文件目录（include路径）
+set(THIRD_PARTY_INCLUDE_DIR "${PROJECT_ROOT_DIR}/third_party/x64-linux/include")
+
+# 查找 vcpkg 安装的库
+find_package(fmt REQUIRED)            # fmt库
+find_package(OpenSSL REQUIRED)        # OpenSSL库
+find_package(Protobuf REQUIRED)       # Protobuf库
+find_package(ZLIB REQUIRED)           # zlib库
+find_package(zstd REQUIRED)           # zstd库
+find_package(absl REQUIRED)
+find_package(utf8_range REQUIRED)
+
+# 添加测试源文件
+add_executable(decoder_test
+    test_decoder.cc
+    # 包含所有模块的源文件
+    ${SRCS}
+)
+add_executable(log_test
+    test_logwrite.cc
+    # 包含所有模块的源文件
+    ${SRCS}
+)
+#添加宏
+target_compile_definitions(decoder_test PRIVATE -DENABLE_LOG)
+target_compile_definitions(log_test PRIVATE -DENABLE_LOG)
+# 包含头文件目录
+target_include_directories(decoder_test PRIVATE
+    ${THIRD_PARTY_INCLUDE_DIR}  # 第三方库头文件目录
+    ${PROJECT_ROOT_DIR}         # 项目根目录
+)
+target_include_directories(log_test PRIVATE
+    ${THIRD_PARTY_INCLUDE_DIR}  # 第三方库头文件目录
+    ${PROJECT_ROOT_DIR}         # 项目根目录
+)
+
+# 链接所有依赖库
+target_link_libraries(decoder_test PRIVATE
+    # fmt库
+    fmt::fmt
+    # OpenSSL库
+    OpenSSL::SSL
+    OpenSSL::Crypto
+    # Protobuf库
+    protobuf::libprotobuf
+    # zlib库
+    ZLIB::ZLIB
+    # zstd库
+    zstd::libzstd_static  # 静态链接
+    absl::strings
+    absl::log_initialize
+    absl::log_globals
+    absl::log_severity
+    absl::absl_check
+    absl::absl_log
+    absl::algorithm
+    absl::base
+    absl::bind_front
+    absl::bits
+    absl::btree
+    absl::cleanup
+    absl::cord
+    absl::core_headers
+    absl::debugging
+    absl::die_if_null
+    absl::dynamic_annotations
+    absl::flags
+    absl::flat_hash_map
+    absl::flat_hash_set
+    absl::function_ref
+    absl::hash
+    absl::if_constexpr
+    absl::layout
+    absl::memory
+    absl::node_hash_map
+    absl::node_hash_set
+    absl::optional
+    absl::random_distributions
+    absl::random_random
+    absl::span
+    absl::status
+    absl::statusor
+    absl::synchronization
+    absl::time
+    absl::type_traits
+    absl::utility
+    absl::variant
+    utf8_range::utf8_validity
+)
+target_link_libraries(log_test PRIVATE
+    # fmt库
+    fmt::fmt
+    # OpenSSL库
+    OpenSSL::SSL
+    OpenSSL::Crypto
+    # Protobuf库
+    protobuf::libprotobuf
+    # zlib库
+    ZLIB::ZLIB
+    # zstd库
+    zstd::libzstd_static  # 静态链接
+    absl::strings
+    absl::log_initialize
+    absl::log_globals
+    absl::log_severity
+    absl::absl_check
+    absl::absl_log
+    absl::algorithm
+    absl::base
+    absl::bind_front
+    absl::bits
+    absl::btree
+    absl::cleanup
+    absl::cord
+    absl::core_headers
+    absl::debugging
+    absl::die_if_null
+    absl::dynamic_annotations
+    absl::flags
+    absl::flat_hash_map
+    absl::flat_hash_set
+    absl::function_ref
+    absl::hash
+    absl::if_constexpr
+    absl::layout
+    absl::memory
+    absl::node_hash_map
+    absl::node_hash_set
+    absl::optional
+    absl::random_distributions
+    absl::random_random
+    absl::span
+    absl::status
+    absl::statusor
+    absl::synchronization
+    absl::time
+    absl::type_traits
+    absl::utility
+    absl::variant
+    utf8_range::utf8_validity
+)

@@ -26,7 +26,7 @@ namespace logger {
         return Header()->size;
     }
 
-    size_t MmapAux::Capacity() const {
+    size_t MmapAux::Capacity() const noexcept {
         if (!Isvalid()) {
             return 0;
         }

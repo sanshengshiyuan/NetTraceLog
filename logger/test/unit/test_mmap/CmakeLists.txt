@@ -1,0 +1,62 @@
+# 最低CMake版本要求
+cmake_minimum_required(VERSION 3.15)
+
+# 定义测试目标名称
+project(logger_mmap_aux_test)
+
+# 设置C++标准
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+#条件编译
+if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+    set(MMAP_SRCS ../../../mmap/mmap_aux.cc ../../../mmap/mmap_linux.cc)
+    set(UTIL_SRCS ../../../utils/sys_util_linux.cc ../../../utils/file_util.cc)
+elseif(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+    set(MMAP_SRCS ../../../mmap/mmap_aux.cc ../../../mmap/mmap_win.cc)
+    set(UTIL_SRCS ../../../utils/sys_util_win.cc ../../../utils/file_util.cc)
+else()
+    message(FATAL_ERROR "unsupported.")
+endif()
+
+set(FORMATTER_SRCS ../formatter/default_formatter.cc ../formatter/effective_formatter.cc ../formatter/effective_msg.pb.cc)
+set(SINK_SRCS ../sinks/console_sink.cc ../sinks/effective_sink.cc)
+set(COMPRESS_SRCS ../compress/zlib_compress.cc ../compress/zstd_compress.cc)
+set(CRYPT_SRCS ../encrypt/aes_encrypt.cc ../encrypt/encrypt.cc)
+set(CONTEXT_SRCS ../context/context.cc ../context/executor.cc ../context/thread_pool.cc)
+
+set(SRCS
+    ../log_handle.cc
+    ${MMAP_SRCS}
+    ${UTIL_SRCS}
+    ${FORMATTER_SRCS}
+    ${SINK_SRCS}
+    ${COMPRESS_SRCS}
+    ${CRYPT_SRCS}
+    ${CONTEXT_SRCS}
+)
+
+# 配置第三方库路径（关键步骤）
+get_filename_component(PROJECT_ROOT_DIR "${CMAKE_CURRENT_LIST_DIR}/../../.." ABSOLUTE)
+
+# 1. 设置第三方库的头文件目录（include路径）
+set(THIRD_PARTY_INCLUDE_DIR "${PROJECT_ROOT_DIR}/third_party/x64-linux/include")
+
+# 仅进行单元测试，不依赖第三方库
+
+# 添加测试源文件
+add_executable(mmap_aux_test
+    mmap_aux_test.cc
+    ${MMAP_SRCS}
+    ${UTIL_SRCS}
+)
+
+# 包含头文件目录
+target_include_directories(mmap_aux_test PRIVATE
+    ${PROJECT_ROOT_DIR}
+)
+
+# 启用并注册测试
+enable_testing()
+add_test(NAME mmap_aux_test COMMAND mmap_aux_test)
+

@@ -1,0 +1,19 @@
+Start testing: Aug 20 17:04 CST
+----------------------------------------------------------
+1/1 Testing: formatter_test
+1/1 Test: formatter_test
+Command: "/mnt/e/Graduate/mylog/logger/test/unit/test_formatter/build/formatter_test"
+Directory: /mnt/e/Graduate/mylog/logger/test/unit/test_formatter/build
+"formatter_test" start time: Aug 20 17:04 CST
+Output:
+----------------------------------------------------------
+All formatter tests passed.
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"formatter_test" end time: Aug 20 17:04 CST
+"formatter_test" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Aug 20 17:04 CST

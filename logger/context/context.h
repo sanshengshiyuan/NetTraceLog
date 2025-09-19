@@ -29,7 +29,7 @@ class Context {
 }  
 } 
 
-#define CONTEXT logger::ctx::Context::GetInstance()
+#define CONTEXT logger::context::Context::GetInstance()
 
 #define EXECUTOR CONTEXT->GetExecutor()
 

@@ -1,0 +1,19 @@
+Start testing: Aug 20 16:20 CST
+----------------------------------------------------------
+1/1 Testing: context_test
+1/1 Test: context_test
+Command: "/mnt/e/Graduate/mylog/logger/test/unit/test_context/build/context_test"
+Directory: /mnt/e/Graduate/mylog/logger/test/unit/test_context/build
+"context_test" start time: Aug 20 16:20 CST
+Output:
+----------------------------------------------------------
+All context tests passed.
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"context_test" end time: Aug 20 16:20 CST
+"context_test" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Aug 20 16:20 CST

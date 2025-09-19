@@ -1,0 +1,4 @@
+/mnt/e/Graduate/mylog/logger/test/unit/test_formatter/build/CMakeFiles/formatter_test.dir
+/mnt/e/Graduate/mylog/logger/test/unit/test_formatter/build/CMakeFiles/test.dir
+/mnt/e/Graduate/mylog/logger/test/unit/test_formatter/build/CMakeFiles/edit_cache.dir
+/mnt/e/Graduate/mylog/logger/test/unit/test_formatter/build/CMakeFiles/rebuild_cache.dir

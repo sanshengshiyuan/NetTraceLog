@@ -16,4 +16,6 @@ namespace logger {
 
     void LocalTime(std::tm* time, std::time_t* now);
 
+    std::string GenerateString(size_t size);
+
 }

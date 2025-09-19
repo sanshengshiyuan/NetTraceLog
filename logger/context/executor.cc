@@ -4,7 +4,7 @@ namespace logger {
 namespace context {
     //ExecutorTimer的函数定义
     ExecutorTimer::ExecutorTimer() {
-        std::make_unique<ThreadPool>(1);
+        thread_pool_ = std::make_unique<ThreadPool>(1);
         repeated_task_id_.store(0);
         is_running_.store(false);
     }
@@ -20,9 +20,13 @@ namespace context {
         if (is_running_.load()) {
             return true;
         }
-        int ret = thread_pool_->Start();
+        bool ret = thread_pool_->Start();
+        if (!ret) {
+            return false;
+        }
+        is_running_.store(true);
         thread_pool_->RunTask(&ExecutorTimer::Run, this);
-        return ret;
+        return true;
     }
     void ExecutorTimer::PostDelayTask(Task task,const std::chrono::microseconds& delta) {
         Internals s;
@@ -90,8 +94,8 @@ namespace context {
         }
         TaskRunnerPtr runner = std::make_unique<TaskRunner>(1);
         runner->Start();
-        task_runner_dic_.emplace(latest_tag, runner);
-        
+        task_runner_dic_.emplace(latest_tag, std::move(runner));
+        return latest_tag;
     }
     ExecutorContext::TaskRunner* ExecutorContext::GetTaskRunner(const TaskRunnerTag& tag) {
         std::lock_guard<std::mutex> lock(executor_context_mutex_);

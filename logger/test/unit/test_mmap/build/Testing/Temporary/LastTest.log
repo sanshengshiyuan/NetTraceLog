@@ -1,0 +1,19 @@
+Start testing: Aug 20 16:06 CST
+----------------------------------------------------------
+1/1 Testing: mmap_aux_test
+1/1 Test: mmap_aux_test
+Command: "/mnt/e/Graduate/mylog/logger/test/unit/test_mmap/build/mmap_aux_test"
+Directory: /mnt/e/Graduate/mylog/logger/test/unit/test_mmap/build
+"mmap_aux_test" start time: Aug 20 16:06 CST
+Output:
+----------------------------------------------------------
+All mmap tests passed.
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"mmap_aux_test" end time: Aug 20 16:06 CST
+"mmap_aux_test" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Aug 20 16:06 CST

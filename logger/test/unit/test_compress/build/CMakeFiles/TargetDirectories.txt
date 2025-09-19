@@ -1,0 +1,4 @@
+/mnt/e/Graduate/mylog/logger/test/unit/test_compress/build/CMakeFiles/compress_test.dir
+/mnt/e/Graduate/mylog/logger/test/unit/test_compress/build/CMakeFiles/test.dir
+/mnt/e/Graduate/mylog/logger/test/unit/test_compress/build/CMakeFiles/edit_cache.dir
+/mnt/e/Graduate/mylog/logger/test/unit/test_compress/build/CMakeFiles/rebuild_cache.dir

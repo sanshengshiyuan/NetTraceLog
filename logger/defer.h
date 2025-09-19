@@ -17,7 +17,7 @@ public:
 
     template <typename F, typename... Args> 
     ExecuteOnScopeExit(F&& f, Args&&... args) {
-        func_ = std::bind(std::forward<F>(f), std::forward<Args>(args)...)
+        func_ = std::bind(std::forward<F>(f), std::forward<Args>(args)...);
     }
 
     ~ExecuteOnScopeExit() {
@@ -30,5 +30,8 @@ private:
     
 };
 }
+
+// 宏连接工具
+#define CONCAT(x, y) x##y
 
 #define DEFER(lambda) logger::ExecuteOnScopeExit CONCAT(defer_, __LINE__) = lambda

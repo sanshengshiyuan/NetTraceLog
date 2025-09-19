@@ -1,0 +1,19 @@
+Start testing: Aug 20 16:26 CST
+----------------------------------------------------------
+1/1 Testing: compress_test
+1/1 Test: compress_test
+Command: "/mnt/e/Graduate/mylog/logger/test/unit/test_compress/build/compress_test"
+Directory: /mnt/e/Graduate/mylog/logger/test/unit/test_compress/build
+"compress_test" start time: Aug 20 16:26 CST
+Output:
+----------------------------------------------------------
+All compress tests passed.
+<end of output>
+Test time =   0.01 sec
+----------------------------------------------------------
+Test Passed.
+"compress_test" end time: Aug 20 16:26 CST
+"compress_test" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Aug 20 16:26 CST

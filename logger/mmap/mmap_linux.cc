@@ -1,20 +1,20 @@
-#include "mmap/mmap_aux.h"
+#include "mmap_aux.h"
 
 #include <fcntl.h>
 #include <sys/mman.h>
 #include <unistd.h>
 
-#include "defer.h"
+#include "../defer.h"
 
 namespace logger {
 
 bool MmapAux::TryMap(size_t capacity) {
   int fd = open(file_path_.string().c_str(), O_RDWR | O_CREAT, S_IRWXU);
-  LOG_DEFER {
+  DEFER( [&](){
     if (fd != -1) {
       close(fd);
     }
-  };
+  });
 
   if (fd == -1) {
     return false;

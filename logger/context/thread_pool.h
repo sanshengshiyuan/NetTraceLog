@@ -31,10 +31,10 @@ public:
 
     template <class F, class... Args>
     void RunTask(F&& f, Args&&... args) {
-        if (!this->is_avialbe_.load() || this->is_shutdown_.load) {
+        if (!this->is_avialbe_.load() || this->is_shutdown_.load()) {
             return;
         }
-        auto task = std::bind(std::forward<F>(f),std::forward(Args)(args)...);
+        auto task = std::bind(std::forward<F>(f),std::forward<Args>(args)...);
         {
             std::unique_lock<std::mutex> lock(this->task_mutex_);
             this->tasks.emplace([task]() {  task(); });
@@ -52,7 +52,7 @@ public:
         std::future<return_type> res = task->get_future();
         {
             std::unique_lock<std::mutex> lock(this->task_mutex_);
-            this->tasks.emplace([task]() {*(task)();});
+            this->tasks.emplace([task]() {(*task)();});
         }
         this->task_cv_.notify_all();
         return std::make_shared<std::future<return_type>>(std::move(res));

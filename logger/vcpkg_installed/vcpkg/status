@@ -1,0 +1,22 @@
+Package: vcpkg-cmake-config
+Version: 2024-05-23
+Architecture: x64-windows
+Multi-Arch: same
+Abi: 6ae35286c0e1f18bf9c7cf1d311db5389ea77dc2f8da42284609b0d60be73017
+Status: install ok installed
+
+Package: vcpkg-cmake
+Version: 2024-04-23
+Architecture: x64-windows
+Multi-Arch: same
+Abi: de5f4aa2e90f941b397f6ae107d76a78244ccc9aeed5166e91c9771c8a2cb206
+Status: install ok installed
+
+Package: vcpkg-cmake-get-vars
+Version: 2025-05-29
+Depends: vcpkg-cmake
+Architecture: x64-windows
+Multi-Arch: same
+Abi: db53826364898f4547b34ccc189dad07d2db604f45d97ded603ed8c7408f8e88
+Status: install ok installed
+

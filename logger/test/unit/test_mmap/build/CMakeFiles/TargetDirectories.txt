@@ -1,0 +1,4 @@
+/mnt/e/Graduate/mylog/logger/test/unit/test_mmap/build/CMakeFiles/mmap_aux_test.dir
+/mnt/e/Graduate/mylog/logger/test/unit/test_mmap/build/CMakeFiles/test.dir
+/mnt/e/Graduate/mylog/logger/test/unit/test_mmap/build/CMakeFiles/edit_cache.dir
+/mnt/e/Graduate/mylog/logger/test/unit/test_mmap/build/CMakeFiles/rebuild_cache.dir

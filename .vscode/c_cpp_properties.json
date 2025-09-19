@@ -1,0 +1,21 @@
+{
+    "configurations": [
+        {
+            "name": "windows-gcc-x64",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "D:/mingw64/include",
+                "${workspaceFolder}/logger/third_party/x64-linux/include/openssl",
+                "${workspaceFolder}/logger/third_party/x64-linux/include"
+            ],
+            "compilerPath": "D:/mingw64/bin/g++.exe",
+            "cStandard": "${default}",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "windows-gcc-x64",
+            "compilerArgs": [
+                ""
+            ]
+        }
+    ],
+    "version": 4
+}

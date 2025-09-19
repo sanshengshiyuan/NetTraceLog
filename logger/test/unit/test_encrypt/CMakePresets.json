@@ -1,0 +1,28 @@
+{
+  "version": 3,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 15,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "linux-release",
+      "displayName": "Linux Release",
+      "description": "Release build for Linux",
+      "generator": "Unix Makefiles",
+      "binaryDir": "${sourceDir}/build",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_PREFIX_PATH": "/mnt/e/Graduate/mylog/logger/third_party/x64-linux"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "linux-release-build",
+      "configurePreset": "linux-release",
+      "targets": ["encrypt_test" ]
+    }
+  ]
+}

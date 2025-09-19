@@ -19,6 +19,8 @@ public:
     virtual void Encrypt(const void* intput, size_t input_size, std::string& output) = 0;
 
     virtual std::string Decrypt(const void* data, size_t size) = 0;
+
+    virtual void SetKey(const std::string& key) = 0;
 };
 }
 }

@@ -18,7 +18,7 @@ public:
         Task task;
         RepeatedTaskId repeated_id;
 
-        bool operator < (const Internals& other) {
+        bool operator<(const Internals& other) const {
             return time_point > other.time_point;
         }
     };
@@ -91,7 +91,7 @@ public:
     void PostDelayedTask(const TaskRunnerTag& runner_tag, Task task, const std::chrono::duration<R, P>& delta) {
         Task func = std::bind(&Executor::PostTask, this, runner_tag, std::move(task));
         executor_timer_->Start();
-        executor_timer_->PostDelayedTask(std::move(func), std::chrono::duration_cast<std::chrono::microseconds>(delta));
+        executor_timer_->PostDelayTask(std::move(func), std::chrono::duration_cast<std::chrono::microseconds>(delta));
     }
 
     template <typename R, typename P>

@@ -3,6 +3,9 @@
 #include "../log_common.h"
 #include "../formatter/formatter.h"
 #include "../formatter/default_formatter.h"
+#include "../formatter/effective_formatter.h"
+#include "../compress/zlib_compress.h"
+#include "../compress/zstd_compress.h"
 
 namespace logger {
 class LogSink {

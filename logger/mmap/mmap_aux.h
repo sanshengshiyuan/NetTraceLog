@@ -32,7 +32,6 @@ public:
 
     size_t Size() const;//返回内存大小
 
-    size_t Capacity() const;
 
     uint8_t* Data() const;//这里返回的是数据的指针，我这里是抄的源代码，暂时不知道为什么返回的是一个uint8_t*,待会在看一下
 
@@ -56,7 +55,7 @@ private:
 private:
     void Reserve(size_t new_size); //重新分配mmap缓存空间，传入新的空间大小
 
-    size_t Capacity() const noexcept { return capacity_; }
+    size_t Capacity() const noexcept;
 
     bool TryMap(size_t capacity); //尝试为文件映射指定大小的地址空间；
 

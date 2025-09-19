@@ -11,7 +11,7 @@ namespace encrypt {
 std::string BinaryKeyToHex(const std::string& binary_key) {
     std::string hex_key;
     hex_key.reserve(binary_key.size() * 2);
-    for (unsigned char c : hex_key) {
+    for (unsigned char c : binary_key) {
         hex_key += fmt::format("{:02x}", c);
     }
     return hex_key;
@@ -119,13 +119,12 @@ std::tuple<std::string, std::string> GenECDHKey() {
     return std::make_tuple(pub_str, priv_str);
 }
 std::string GenECDHSharedSecret(const std::string& client_pri, const std::string& server_pub) {
-    // 1. 初始化曲线（固定使用secp256r1）
     EC_GROUP* curve = EC_GROUP_new_by_curve_name(NID_X9_62_prime256v1);
     if (!curve) return "";
 
-    // 2. 客户端私钥：std::string -> BIGNUM -> EC_KEY
     EC_KEY* client_key = EC_KEY_new_by_curve_name(NID_X9_62_prime256v1);
-    BIGNUM* priv_bn = BN_bin2bn(reinterpret_cast<const unsigned char*>(client_pri.data()), client_pri.size(), nullptr);
+    BIGNUM* priv_bn = BN_bin2bn(reinterpret_cast<const unsigned char*>(client_pri.data()),
+                                static_cast<int>(client_pri.size()), nullptr);
     if (!client_key || !priv_bn || !EC_KEY_set_private_key(client_key, priv_bn)) {
         EC_KEY_free(client_key);
         BN_free(priv_bn);
@@ -133,10 +132,10 @@ std::string GenECDHSharedSecret(const std::string& client_pri, const std::string
         return "";
     }
 
-    // 3. 服务器公钥：std::string -> EC_POINT
     EC_POINT* server_point = EC_POINT_new(curve);
-    if (!server_point || EC_POINT_oct2point(curve, server_point, 
-        reinterpret_cast<const unsigned char*>(server_pub.data()), server_pub.size(), nullptr) != 1) {
+    if (!server_point || EC_POINT_oct2point(curve, server_point,
+        reinterpret_cast<const unsigned char*>(server_pub.data()),
+        server_pub.size(), nullptr) != 1) {
         EC_POINT_free(server_point);
         EC_KEY_free(client_key);
         BN_free(priv_bn);
@@ -144,14 +143,16 @@ std::string GenECDHSharedSecret(const std::string& client_pri, const std::string
         return "";
     }
 
-    // 4. 核心：调用ECDH_compute_key计算共享密钥
-    size_t secret_len = ECDH_compute_key(nullptr, 0, server_point, client_key, nullptr);
-    unsigned char* secret = (unsigned char*)OPENSSL_malloc(secret_len);
-    bool success = (secret && ECDH_compute_key(secret, secret_len, server_point, client_key, nullptr) == secret_len);
+    const int bits = EC_GROUP_get_degree(curve);
+    const size_t secret_len = (bits + 7) / 8;
+    std::string result;
+    result.resize(secret_len);
 
-    // 5. 封装结果并释放所有资源
-    std::string result = success ? std::string(reinterpret_cast<char*>(secret), secret_len) : "";
-    OPENSSL_free(secret);
+    const int out_len = ECDH_compute_key(reinterpret_cast<unsigned char*>(&result[0]),
+                                         static_cast<int>(result.size()),
+                                         server_point, client_key, nullptr);
+    if (out_len <= 0) result.clear(); else result.resize(static_cast<size_t>(out_len));
+
     EC_POINT_free(server_point);
     EC_KEY_free(client_key);
     BN_free(priv_bn);
