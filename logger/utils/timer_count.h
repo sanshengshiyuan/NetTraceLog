@@ -14,6 +14,7 @@ class TimerCount {
   ~TimerCount() {
     auto end = std::chrono::steady_clock::now();
     auto diff = std::chrono::duration_cast<std::chrono::microseconds>(end - start_);
+    
   }
 
  private:
